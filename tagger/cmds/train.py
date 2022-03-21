@@ -107,7 +107,7 @@ class Train(object):
 
         total_params = sum(p.numel() for p in model.tagger.parameters())
         print ("Total number of parameters:", total_params,"\n")
-        for epoch in range(1, config.epochs + 1):
+        for epoch in range(1, 2): #config.epochs + 1):
             start = datetime.now()
             # train one epoch and update the parameters
             model.train(train_loader)
@@ -136,46 +136,7 @@ class Train(object):
         
 
         
-        print(f"max score of dev is {best_metric.score:.2%} at epoch {best_e}")
+        print(f"max score of dev is {best_metric:.2f} at epoch {best_e}")
         print(f"average time of each epoch is {total_time / epoch}s")
         print(f"{total_time}s elapsed")
-        if config.log_path is None:
-            exit()
-        if os.path.exists(config.log_path):
-            with open(config.log_path, mode="a") as output:
-                output_writer = csv.writer(output, delimiter=',')
-                output_writer.writerow(["biaffine-"+config.model.split("/")[-1], #.split(".m")[0],
-                                        str(len(trainset)),
-                                        str(len(devset)),
-                                        str(epoch),
-                                        str(total_time.total_seconds()),
-                                        str(total_params),
-                                        str(vocab.n_words),
-                                        str(vocab.n_chars),
-                                        str(best_train_metric.uas*100),
-                                        str(best_train_metric.las*100),
-                                        str(best_metric.uas*100),
-                                        str(best_metric.las*100)])
-                                       
-        else:
-            with open(config.log_path, mode="w") as output:
-                output_writer = csv.writer(output, delimiter=',')
-                output_writer.writerow(["Model", "Train Trees",
-                                        "Dev Trees", "Epochs",
-                                        "Training Time", "Parameters",
-                                        "Form Vocab", "Char Vocab",
-                                        "Train UAS", "Train LAS",
-                                        "Dev UAS", "Dev LAS"])
-                output_writer.writerow(["biaffine-"+config.model.split("/")[-1], #.split(".m")[0],
-                                        str(len(trainset)),
-                                        str(len(devset)),
-                                        str(epoch),
-                                        str(total_time.total_seconds()),
-                                        str(total_params),
-                                        str(vocab.n_words),
-                                        str(vocab.n_chars),
-                                        str(best_train_metric.uas*100),
-                                        str(best_train_metric.las*100),
-                                        str(best_metric.uas*100),
-                                        str(best_metric.las*100)])
                                       
