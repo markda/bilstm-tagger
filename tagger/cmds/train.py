@@ -107,7 +107,7 @@ class Train(object):
 
         total_params = sum(p.numel() for p in model.tagger.parameters())
         print ("Total number of parameters:", total_params,"\n")
-        for epoch in range(1, 2): #config.epochs + 1):
+        for epoch in range(1, config.epochs + 1):
             start = datetime.now()
             # train one epoch and update the parameters
             model.train(train_loader)
