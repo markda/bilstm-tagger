@@ -43,10 +43,10 @@ class Predict(object):
         parse_time = time.time() - start_parse_time        
         
         print(f"Save the predicted result to {config.fpred}")
-        #tmp = tempfile.NamedTemporaryFile(delete=False)
-        corpus.save(config.fpred) #tmp.name)
+        tmp = tempfile.NamedTemporaryFile(delete=False)
+        corpus.save(tmp.name)
         ### for reintroducing 1-2 and 1.5 entries for evaluation
-        #reintroduce(config.fdata, tmp.name, config.fpred)
+        reintroduce(config.fdata, tmp.name, config.fpred)
         time_total = time.time() - time_t0
         
         print("TIMES", str(time_total) + "," + str(parse_time))
